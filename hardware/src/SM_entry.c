@@ -1,6 +1,6 @@
 enum ret_codes SM_entry_state(void){
 
-      waitUserACK=0; 	     
+      	     
       toPrint="STAGECOM TX MODULE";
       toPrint+="\r\n\r\n\r\n";
       toPrint+="Press any button to start...";

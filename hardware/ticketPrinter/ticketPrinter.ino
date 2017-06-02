@@ -40,49 +40,33 @@
     #include "src/debounceButtons.c"
 
 
-
+    //Serial
+    String toPrint="";
     
     //State Machine (SM) Functions
     enum ret_codes { ok, fail, repeat};
     bool setupOK=false;
 
-    #include "src/SM_entry.c"
-//    #include "src/SM_scanWifi.c"
-//    #include "src/SM_chooseAP.c"
-//    #include "src/SM_choosePass.c"
+//    #include "src/SM_entry.c"
 //    #include "src/SM_connectAP.c"
 //    #include "src/SM_waitForAP.c"
-//    #include "src/SM_checkRxId.c"
-//    #include "src/SM_seekCH.c"
-//    #include "src/SM_seekAction.c"
 //    #include "src/SM_postRequest.c"
-//    #include "src/SM_foo.c"
-    #include "src/SM_out.c"
+//    #include "src/SM_out.c"
 //    #include "src/SM_Vars.c"
     
-    #define EXIT_STATE out
-    #define ENTRY_STATE SM_entry
-    
-    enum state_codes cur_state = ENTRY_STATE;
-    enum ret_codes rc;
-    enum ret_codes (* state_fun)(void);
+//    #define EXIT_STATE out
+//    #define ENTRY_STATE SM_entry
+//    
+//    enum state_codes cur_state = ENTRY_STATE;
+//    enum ret_codes rc;
+//    enum ret_codes (* state_fun)(void);
 
     
     void setup() {
-    
-      //Setup WIFI
-      AP.ssid="Landing.careers"
-      AP.password="landing17";
-      
-      req.host = "192.168.10.5";
-      req.httpPort = 8080;
-      req.url= "/";
-
-     
+   
       //Setup Serial
       Serial.begin(115200);
       delay(200);
-      uiTimerInit(200);
 
       
       //Setup Buttons
@@ -99,10 +83,10 @@
     void loop() {
 
    
-        state_fun = state[cur_state];
-        rc = state_fun();
-        if (EXIT_STATE == cur_state) out_state();
-        cur_state = state_transitions[cur_state][rc];
+//        state_fun = state[cur_state];
+//        rc = state_fun();
+//        if (EXIT_STATE == cur_state) out_state();
+//        cur_state = state_transitions[cur_state][rc];
           
       if (refreshBTN){
         buttonStates = debouceButtons(buttonStatesRaw,5,&mcp);

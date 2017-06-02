@@ -10,7 +10,6 @@ enum ret_codes SM_waitForAP_state(void){
 
 		case 0:{
 			toPrint+="Failed to Connect";
-			waitUserACK=10;
 			return fail;
 			break;
 		}
@@ -18,13 +17,6 @@ enum ret_codes SM_waitForAP_state(void){
 		case 1:{
 			toPrint+="Connected to RX: ";
 			toPrint+=AP.ssid;
-
-			bufferFS=AP.ssid;
-			bool a=writeFSField("/configFile.txt", "LAST_SSID", &bufferFS);
-			bufferFS=AP.password;
-			a=writeFSField("/configFile.txt", "LAST_PASS", &bufferFS);
-
-			waitUserACK=10;
 			return ok;
 			break;
 		}

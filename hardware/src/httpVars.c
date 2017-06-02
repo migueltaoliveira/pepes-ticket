@@ -1,7 +1,7 @@
 
 struct accessPoint{
-String ssid;
-String password;
+String ssid = "Landing.careers";
+String password = "landing17";
 long timeout=20000;
 };
 
