@@ -3,11 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
-
-
+        android:gravity="center"
+        android:id="@+id/group_ticket_item"
+        android:text="Cafetaria, Peixaria, Pastelaria"/>
 </LinearLayout>
