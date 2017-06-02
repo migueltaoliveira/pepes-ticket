@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Pepes Ticket</string>
     <string name="action_settings">Settings</string>
+    <string name="preference_file_key">preference_key_values_set_key</string>
+    <string name="preference_user_id_key">preference_user_id_key</string>
+    <string name="authentication_failed">Authentication failed</string>
 </resources>
