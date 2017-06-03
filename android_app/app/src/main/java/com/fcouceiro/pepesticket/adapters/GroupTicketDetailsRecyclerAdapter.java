@@ -76,7 +76,12 @@ public class GroupTicketDetailsRecyclerAdapter extends RecyclerView.Adapter<Grou
 
             serviceTextView.setText(ticketItem.getService().getName());
             ticketTextView.setText(String.valueOf(ticketItem.getTicketNumber()));
-            actualTicketView.setText("(n/a)"); // TODO: get from API
+            if(ticketItem.getService().getActualTicket() != null){
+                actualTicketView.setText(String.format("(%d)", ticketItem.getService().getActualTicket().getTicketNumber()));
+            }
+            else{
+                actualTicketView.setText("(n/a)");
+            }
         }
     }
 }
