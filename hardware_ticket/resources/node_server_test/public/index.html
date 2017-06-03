@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+<script src="scripts.js" type="text/javascript"></script>
+</head>
+<body onload="loadStuff();" onresize="getImageRatio()">
+
+
+<div class="tabbed">
+      <input name="tabbed" id="tabbed1" type="radio" checked>
+      <section>
+      <h1>
+      <label for="tabbed1">MAPA</label>
+      </h1>
+        <div>
+        <div id="imageCPadding">
+        <div id="imageC" class="container">
+        <img id="myImg" src="image.jpg" ondrop="drop(event)" ondragover="allowDrop(event)"/> 
+        </div>
+        </div> 
+
+<div class="divContainer">
+  <div id="divB1" class="block">1</div>
+  <div id="divB2" class="block">2</div>
+  <div id="divB3" class="block">3</div>
+  <div id="divB4" class="block">4</div>
+  <div id="divB5" class="block">5</div>
+  <div id="divB6" class="block">6</div>
+<!--   <div id="divB7" class="block">7</div>
+  <div id="divB8" class="block">8</div>
+  <div id="divB9" class="block">9</div>
+  <div id="divB10"class="block">10</div>
+  <div id="divB11"class="block">11</div>
+  <div id="divB12"class="block">12</div>
+  <div id="divB13"class="block">13</div>
+  <div id="divB14"class="block">14</div>
+  <div id="divB15"class="block">15</div>
+  <div id="divB16"class="block">16</div> -->
+
+
+</div>
+
+        <div>
+        <input type="file" id="myFile" onchange="readURL()"><br>
+        <button onclick="uploadImage()">Upload</button>
+      </div>
+        </div>
+         
+      </section>
+      
+      <input name="tabbed" id="tabbed2" type="radio">
+      <section>
+        <h1>
+          <label for="tabbed2">WIFI</label>
+        </h1>
+        <div>
+         <h2>WIFI SETTINGS</h2>
+    SSID: <textarea name="SSID" id="ssidTA" rows="1" cols="30"><!--SSID-->></textarea><br>
+    PASS: <textarea name="PASS" id="passTA" rows="1" cols="30"><!--PASS-->></textarea><br>
+    HIDDEN_NETWORK: <input type="checkbox" id="hiddenTA"><br><br>
+    <span class="indent1">
+    <input type="button" value="Config" onclick="submitConfigs()">
+    </span>
+        </div>
+        
+      </section>
+      <input name="tabbed" id="tabbed3" type="radio">
+      <section>
+        <h1>
+          <label for="tabbed3">POWER</label>
+        </h1>
+        <div>
+         
+         <h2>POWER SETTINGS</h2>
+    <span>CURRENT PEAK(mA): <textarea disabled name="CURRENTPEAK" id="currentPeakTA" rows="1" cols="10"><!--PEAK-->></textarea> </span>
+    <p>
+    CURRENT MAX(mA):&nbsp&nbsp<textarea name="CURRENTMAX" id="currentMaxTA" rows="1" cols="10"><!--MAX-->></textarea>
+    <span class="indent3">
+    <input type="button" value="SET" onclick="setMaxCurrent()">
+    </span>
+    </p>
+        </div>
+      </section>
+      <input name="tabbed" id="tabbed4" type="radio" onclick="closeChannel()">
+      <section>
+        <h1>
+        <label for="tabbed4" id="label4">CHANNEL</label>
+        </h1>
+        <div>
+
+        <div id="leftdiv">
+        <h1>INSTRUCTION LIST</h1>
+        <textarea name="gcode" id="drop_zone" rows="20" cols="35"><!--Drop txt file here-->></textarea>
+        </div>
+
+        <div id="rightdiv">
+        
+        <div id="SandRdiv">  
+        <label class="switch" id="JogSwitch">
+        <input input id="onoff" type="checkbox" onclick="sendFreezeSLIDER()" checked>
+        <div class="slider round"></div>
+        </label>
+        <input type="range" class="vranger" id="myRange"  min="0" max="180" value="90" oninput="showVal(this.value)">
+        </div>
+
+        <div id="sliderValDiv">
+        <span>
+        <button type="button" id="minusB" onclick="decVal()">
+        <span>-</span>
+        </button>
+        </span>
+        <input type="text" id="sliderVal" value="90">
+        <span >
+        <button type="button" id="plusB" onclick="incVal()">
+        <span>+</span>
+        </button>
+        </span>
+        </div>
+
+        </div>
+        </div>
+        
+      </section>
+</div>
+<!-- <script src="https://jsconsole.com/js/remote.js?a54fb002-de8e-499a-883e-a1ff0b5b18b5"></script> -->
+</body>
+</html>

@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html>
+<title>PP2016 config</title>
+<meta http-equiv="Content-Type" content="text/html; charset = utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/esp8266ORI.js"></script>
+<style>
+span.indent1{ padding-left: 6em }
+span.indent2{ padding-left: 3em }
+span.indent3{ 
+  padding-left: 5px; 
+}
+
+#wrapper
+{
+background-color: #87A295;
+width:620px;
+margin:20 auto;
+padding-left:25px;
+overflow:hidden;
+float:left;
+}
+
+#topBar
+{
+width:100%;
+float:left;
+}
+
+#central
+{
+width:100%;
+clear:both;
+}
+
+#leftdiv
+{
+float:left;
+width:50%;
+}
+
+#rightdiv
+{
+float:right;
+width:50%;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 23px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 19px;
+  width: 19px;
+  left: 3px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #000000;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #000000;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(15px);
+  -ms-transform: translateX(15px);
+  transform: translateX(15px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 19px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+</style>
+</head>
+
+<body onload="loadSPIFFS();">
+<div id="wrapper"> <!--This is the Div 1 in the picture-->
+<h1 id="headerTitle"> PP2016 MASTER CONFIGURATION: </h1>   
+    <div id="topBar"> <!--This is the Div 2 in the picture-->
+        <div id="leftdiv"><!--This is the Div 4 in the picture-->
+<h2>CHANNEL SETTINGS</h2>
+     <select id="mySelect" name="select" onchange="onChangeChannel()"> 
+        <option id="option1" value="1" >CH1:</option>
+        <option id="option2" value="2" >CH2:</option>
+        <option id="option3" value="3" >CH3:</option>
+        <option id="option4" value="4" >CH4:</option>
+        <option id="option5" value="5" >CH5:</option>
+        <option id="option6" value="6" >CH6:</option>
+    </select>
+  <span class="indent3">
+  <label class="switch">
+  <input input id="onoff" type="checkbox" onclick="sendFreeze()" checked>
+  <div class="slider round"></div>
+  </label>
+  </span>
+ <textarea name="gcode" id="drop_zone" rows="20" cols="35"><!--Drop txt file here-->></textarea>
+    <br>
+        </div> 
+        <div id="rightdiv"><!--This is the Div 5 in the picture-->
+<h2>WIFI SETTINGS</h2>
+    SSID: <textarea name="SSID" id="ssidTA" rows="1" cols="30"><!--SSID-->></textarea><br>
+    PASS: <textarea name="PASS" id="passTA" rows="1" cols="30"><!--PASS-->></textarea>
+    HIDDEN_NETWORK: <input type="checkbox" id="hiddenTA"><br><br>
+    <span class="indent1">
+    <input type="button" value="Config" onclick="submitConfigs()">
+    </span>
+    <br>
+    <br>
+    <h2>POWER SETTINGS</h2>
+    <span>CURRENT PEAK(mA): <textarea disabled name="CURRENTPEAK" id="currentPeakTA" rows="1" cols="10"><!--PEAK-->></textarea> </span>
+    <p>
+    CURRENT MAX(mA):&nbsp&nbsp<textarea name="CURRENTMAX" id="currentMaxTA" rows="1" cols="10"><!--MAX-->></textarea>
+    <span class="indent3">
+    <input type="button" value="SET" onclick="setMaxCurrent()">
+    </span>
+    </p>
+        </div> 
+   <p>
+    </div><!--Closing "topBar"-->
+    
+    <div id="central"> <!--This is the Div 3 in the picture-->
+    <div id="leftdiv">
+    <span class="indent1">
+    <input type="button" value="Upload" onclick="submitSPIFFS()"> 
+    </span>
+    </div> <!--This is the Div 4 in the picture-->
+    <div id="rightdiv">
+    </span>
+<span class="indent1">
+    <input type="button" value="Board Reset" onclick="restartBoard()">
+</span>
+    </div> <!--This is the Div 5 in the picture-->  
+    
+    </div><!--Closing "central"-->  
+    </p> 
+<br>
+<br>
+</div><!--Closing "wrapper"-->
+</body>
