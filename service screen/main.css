@@ -38,3 +38,11 @@ header {
 #title{
 	text-shadow:1px 1px 0 #888;
 }
+
+body{
+	background-color: #37718E;
+}
+
+#name{
+	color: #FFFFFF;
+}
