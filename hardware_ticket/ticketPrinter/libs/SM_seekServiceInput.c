@@ -59,9 +59,10 @@
       case BTN_PRINT:{
         composeRequest(&req);
         toPrint=req.payload;
-        waitUserACK=10;
+        waitUserACK=2;
         cur_ticket=0;
         buttonStates=0;
+        LEDblinkACTIVE(3,200);
         return ok;
       }
 
