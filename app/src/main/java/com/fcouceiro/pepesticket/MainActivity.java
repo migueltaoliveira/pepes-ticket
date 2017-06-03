@@ -1,26 +1,21 @@
 package com.fcouceiro.pepesticket;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.fcouceiro.pepesticket.communication.models.GroupTicket;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private RecyclerAdapter adapter;
+    private GroupTicketRecyclerAdapter adapter;
     private ArrayList<GroupTicket> group;
 
     @Override
@@ -34,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         group = new ArrayList<>();
 
-        adapter = new RecyclerAdapter(group);
+        adapter = new GroupTicketRecyclerAdapter(group);
 
         recyclerView.setAdapter(adapter);
+
+        setRecyclerViewScrollListener();
 
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -50,6 +47,23 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+    }
+
+    private int getLastVisibleItemPosition() {
+        return linearLayoutManager.findLastVisibleItemPosition();
+    }
+
+    private void setRecyclerViewScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                if (totalItemCount == getLastVisibleItemPosition() + 1) {
+                    //TODO: SACAR NOVO ITEM
+                }
+            }
+        });
     }
 
     @Override
