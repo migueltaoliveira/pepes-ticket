@@ -92,10 +92,10 @@ public class GroupTicketView extends LinearLayout {
 
         // Add text view
         TextView lblPlus = new TextView(getContext());
-        lblPlus.setGravity(Gravity.CENTER);
+        lblPlus.setGravity(Gravity.CENTER_VERTICAL);
         lblPlus.setTextSize(getResources().getDimension(R.dimen.font_xs));
         lblPlus.setText("+" + String.valueOf(tickets.size() - childCount));
-        addView(lblPlus);
+        addView(lblPlus, params);
     }
 
     private int computeNumberOfChilds(List<Ticket> tickets){
