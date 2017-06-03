@@ -5,6 +5,7 @@ package model;
  */
 public class Ticket
 {
+
     private Service service;
     private long ticketNumber;
 
