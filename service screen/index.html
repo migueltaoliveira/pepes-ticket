@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Pepes Ticket</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var servicesUrl = "";
+    var clicks = 0;
+    function onClick() {
+        clicks += 1;
+        document.getElementById("clicks").innerHTML = clicks;
+    };
+
+    function httpGet(theUrl)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+        xmlHttp.send( null );
+        return xmlHttp.responseText;
+    }
+
+    window.onkeyup = function(e) 
+    {
+       var key = e.keyCode ? e.keyCode : e.which;
+
+       if (key == 38) {
+           playerSpriteX += 10;
+       }else if (key == 40) {
+           playerSpriteX -= 10;
+       }
+    }
+
+    </script>
+    <button type="button" onClick="onClick()">Click me</button>
+    <p>Clicks: <a id="clicks">0</a></p>
+
+</body></html>
