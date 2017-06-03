@@ -262,16 +262,15 @@ public class MarketManager implements Manager
     {
         for (Map.Entry<Long, GroupTicket> longGroupTicketEntry : this.groupTickets.entrySet())
         {
-            if (longGroupTicketEntry.getKey().equals(ticketId))
+
+            for (Ticket ticket : longGroupTicketEntry.getValue().getTicket())
             {
-                for (Ticket ticket : longGroupTicketEntry.getValue().getTicket())
+                if (ticket.getService().getName().equals(serviceName) && ticketId.equals(ticket.getTicketId()))
                 {
-                    if (ticket.getService().getName().equals(serviceName))
-                    {
-                        return ticket;
-                    }
+                    return ticket;
                 }
             }
+
         }
         return null;
     }
@@ -297,11 +296,14 @@ public class MarketManager implements Manager
                     cleanGroupTicket = ticket.getGroupTicketId();
                     GroupTicket groupTicket = this.groupTickets.get(cleanGroupTicket);
 
-                    //check if the group ticket was served
-                    for (Ticket ticket1 : groupTicket.getTicket()) {
-                        if (!ticket1.isFinished()) {
-                            //if the group ticket has one ticket that is not served, we don't remove it yet
-                            cleanGroupTicket = null;
+                    if (groupTicket != null)
+                    {
+                        //check if the group ticket was served
+                        for (Ticket ticket1 : groupTicket.getTicket()) {
+                            if (!ticket1.isFinished()) {
+                                //if the group ticket has one ticket that is not served, we don't remove it yet
+                                cleanGroupTicket = null;
+                            }
                         }
                     }
                 }

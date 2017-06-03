@@ -22,53 +22,58 @@
        return rObj;
     });
 
+    function updateTicket (key, ticketId) {
+        document.getElementById(key).innerHTML = ticketId;
+    }
+
     function onClick(key) {
-        var response;
+        
         if (key == 81)
         {
-            httpGet(servicesUrl + "TALHO/nextTicket");
+            httpGet(servicesUrl + "TALHO/nextTicket", key, updateTicket);
         } else if (key == 87)
         {
-            httpGet(servicesUrl + "PADARIA/nextTicket");
+            httpGet(servicesUrl + "PADARIA/nextTicket", key, updateTicket);
         } else if (key == 69)
         {
-            httpGet(servicesUrl + "PEIXARIA/nextTicket");
-        } else if (key = 82)
+            httpGet(servicesUrl + "PEIXARIA/nextTicket", key, updateTicket);
+        } else if (key == 82)
         {
-            httpGet(servicesUrl + "CHARCUTARIA/nextTicket");
-        } else if (key = 84)
+            httpGet(servicesUrl + "CHARCUTARIA/nextTicket", key, updateTicket);
+        } else if (key == 84)
         {
-            httpGet(servicesUrl + "PASTELARIA/nextTicket");
+            httpGet(servicesUrl + "PASTELARIA/nextTicket", key, updateTicket);
         }
 
+        
+    }
 
-        document.getElementById("clicks").innerHTML = clicks;
-    };
-
-    function httpGet(theUrl)
+    function httpGet(theUrl, key, cb)
     {
         console.log(theUrl);
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", theUrl, false);
+        xhttp.open("GET", theUrl, true);
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
         xhttp.setRequestHeader("Access-Control-Allow-Methods", "*");
-
+        xhttp.onload = function () {
+            // do something to response
+            console.log(this.responseText);
+            var response = JSON.parse(this.responseText);
+            
+            // notify callback
+            cb(key, response.ticketId);
+        };
         xhttp.send();
-        var response = JSON.parse(xhttp.responseText);
-        console.log(response);
-        return response;
     }
 
     window.onkeyup = function(e) 
     {
        var key = e.keyCode ? e.keyCode : e.which;
-
-        //q, w, e, r, t
-        console.log(key);
-
-
        onClick(key);
+
+       //q, w, e, r, t
+        console.log(key);
     }
 
     </script>
@@ -78,27 +83,27 @@
         <div class="w3-col s2 w3-center w3-margin-right w3-red ">
           <h1 id="title" ><b>Talho</b></h1>
           <img src="images/talho.png" class="w3-image">
-          <h3>Senha Atual: <a id="clicks">0</a></h3>
+          <h3>Senha Atual: <a id="81">0</a></h3>
         </div>
         <div class="w3-col s2 w3-center w3-margin-right w3-red ">
           <h1 id="title" ><b>Padaria</b></h1>
           <img src="images/padaria.png" class="w3-image">
-          <h3>Senha Atual: <a id="clicks">0</a></h3>
+          <h3>Senha Atual: <a id="87">0</a></h3>
         </div>
         <div class="w3-col s2 w3-center w3-margin-right w3-red ">
           <h1 id="title" ><b>Peixaria</b></h1>
           <img src="images/peixaria.png" class="w3-image">
-          <h3>Senha Atual: <a id="clicks">0</a></h3>
+          <h3>Senha Atual: <a id="69">0</a></h3>
         </div>
         <div class="w3-col s2 w3-center w3-margin-right w3-red ">
           <h1 id="title" ><b>Charcutaria</b></h1>
           <img src="images/charcutaria.png" class="w3-image">
-          <h3>Senha Atual: <a id="clicks">0</a></h3>
+          <h3>Senha Atual: <a id="82">0</a></h3>
         </div>
         <div class="w3-col s2 w3-center w3-margin-right w3-red ">
           <h1 id="title" ><b>Pastelaria</b></h1>
           <img src="images/pastelaria.png" class="w3-image">
-          <h3>Senha Atual: <a id="clicks">0</a></h3>
+          <h3>Senha Atual: <a id="84">0</a></h3>
         </div>
       </div>
     </div>
