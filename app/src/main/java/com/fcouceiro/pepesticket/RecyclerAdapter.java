@@ -9,7 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.fcouceiro.pepesticket.communication.models.GroupTicket;
+import com.fcouceiro.pepesticket.communication.models.Ticket;
+
 import java.security.acl.Group;
+import java.util.ArrayList;
 
 /**
  * Created by joaopedro on 03-06-2017.
@@ -34,12 +38,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.GroupT
             v.setOnClickListener(this);
         }
 
+        public void bindGroupTicket(GroupTicket group){
+
+            String serviceNames = "";
+            for (Ticket ticket : group.getTicket()) {
+                serviceNames += ticket.getService().getName() + ", ";
+            }
+
+            item.setText(serviceNames);
+        }
+
         @Override
         public void onClick(View v) {
-//            Context context = itemView.getContext();
-//            Intent showPhotoIntent = new Intent(context, PhotoActivity.class);
-//            showPhotoIntent.putExtra(PHOTO_KEY, mPhoto);
-//            context.startActivity(showPhotoIntent);
+            Context context = itemView.getContext();
+            Intent showGroupTicketDetailsIntent = new Intent(context, GroupTicketDetailsActivity.class);
+            //showGroupTicketDetailsIntent.putExtra();
+            context.startActivity(showGroupTicketDetailsIntent);
         }
     }
 
@@ -57,7 +71,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.GroupT
 
     @Override
     public void onBindViewHolder(RecyclerAdapter.GroupTicketHolder holder, int position) {
-
+        GroupTicket item = groupTicket.get(position);
+        holder.bindGroupTicket(item);
     }
 
     public int getItemCount(){
