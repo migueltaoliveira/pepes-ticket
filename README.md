@@ -15,3 +15,12 @@ The information is centralised so that in both the application and the supermark
  
 For demonstration purposes, the solution offers not only the Android application which relies on a custom server, but also an hardware-based integration that simulates the interaction of the customer with a tickets’ machine and also emulates the screens distributed throughout the supermarket.
 
+## architecture
+
+There are 4 components in total:
+* Android front-end app
+* Hardware-based front-end
+* Basic web dashboard for each service
+* Java backend
+
+Each have its own folder in this repo.
