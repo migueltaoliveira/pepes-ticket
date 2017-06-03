@@ -11,10 +11,10 @@ import manager.MarketManager;
 import model.GroupTicket;
 import model.Service;
 import model.Ticket;
-import org.apache.log4j.Logger;
 import utils.Constants;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by migueloliveira on 02/06/17.
@@ -23,7 +23,7 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 public class MarketAPI
 {
-    private static Logger logger = Logger.getLogger(MarketAPI.class);
+    private static Logger logger = Logger.getLogger(MarketAPI.class.getName());
 
     private MarketManager marketManager;
     private Gson gson;
@@ -43,6 +43,7 @@ public class MarketAPI
     @Consumes({MediaType.APPLICATION_JSON})
     public Response generateTickets(@QueryParam("userId") String userId, String servicesRequest)
     {
+        logger.info("POST /tickets/generate?userId=" + userId + " body = " + servicesRequest);
         ServicesRequest services = gson.fromJson(servicesRequest, ServicesRequest.class);
         GroupTicket groupTicket = null;
 
@@ -74,6 +75,8 @@ public class MarketAPI
     @Produces({MediaType.APPLICATION_JSON})
     public Response getTickets(@QueryParam("userId") String userId, @PathParam("id") Long id)
     {
+        logger.info("GET /tickets/" + id + "?userId=" + userId);
+
         GroupTicket groupTicket = this.marketManager.getTicket(userId, id);
 
         if (groupTicket != null)
@@ -94,6 +97,8 @@ public class MarketAPI
     @Produces({MediaType.APPLICATION_JSON})
     public Response getNextService(@QueryParam("userId") String userId, @PathParam("id") Long id)
     {
+        logger.info("GET /tickets/" + id + "/nextService?userId=" + userId);
+
         Service service = this.marketManager.getNextService(userId, id);
         if (service != null)
         {
@@ -113,6 +118,8 @@ public class MarketAPI
     @Produces({MediaType.APPLICATION_JSON})
     public Response getServices()
     {
+        logger.info("GET /services");
+
         List<Service> services = this.marketManager.getServices();
         return Response.status(Response.Status.OK).entity(gson.toJson(services)).build();
     }
@@ -124,6 +131,8 @@ public class MarketAPI
     @Path("/tickets/{id}")
     public Response deleteTicket(@QueryParam("userId") String userId, @PathParam("id") Long id)
     {
+        logger.info("DELETE /tickets/" + id + "?userId=" + userId);
+
         boolean deleted = this.marketManager.deleteTicket(userId, id);
         if (deleted)
         {
@@ -142,6 +151,8 @@ public class MarketAPI
     @Path("/tickets")
     public Response getTickets(@QueryParam("userId") String userId)
     {
+        logger.info("GET /tickets?userId=" + userId);
+
         List<GroupTicket> tickets = this.marketManager.getTickets(userId);
 
         return Response.status(Response.Status.OK).entity(gson.toJson(tickets)).build();
@@ -154,6 +165,8 @@ public class MarketAPI
     @Path("/services/{service}/nextTicket")
     public Response getNextTicket(@PathParam("service") String serviceName)
     {
+        logger.info("GET /services/" + serviceName);
+
         Ticket nextTicket = this.marketManager.getNextTicket(serviceName);
 
         if (nextTicket != null)
@@ -174,6 +187,8 @@ public class MarketAPI
     @Consumes({MediaType.APPLICATION_JSON})
     public Response authentication()
     {
+        logger.info("POST /authentication");
+
         String userId = this.marketManager.authentication();
         return Response.status(Response.Status.OK).entity(gson.toJson(userId)).build();
     }

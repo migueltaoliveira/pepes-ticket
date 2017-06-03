@@ -79,9 +79,8 @@ public class MarketManager implements Manager
                 synchronized (this.services)
                 {
                     this.services.get(service).getQueue().add(new Pair<>(groupTicket.getId(), ticketNumber));
+                    tickets.add(new Ticket(this.services.get(service), ticketNumber));
                 }
-
-                tickets.add(new Ticket(new Service(service), ticketNumber));
             }
         }
 
@@ -218,9 +217,9 @@ public class MarketManager implements Manager
     {
         ArrayList<Service> services = new ArrayList<>();
 
-        for (String service : Constants.SERVICES)
+        for (Map.Entry<String, Service> service : this.services.entrySet())
         {
-            services.add(new Service(service));
+            services.add(service.getValue());
         }
 
         return services;
