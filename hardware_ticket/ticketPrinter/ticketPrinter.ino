@@ -53,7 +53,8 @@
     int printingStatus=0;
     #include "libs/uiTimerInit.c"
     #include "libs/clearTerminal.c"
-    
+    int LED_count=0;
+    int onoff_count=0;
 
     
     //State Machine (SM) Functions
@@ -86,7 +87,7 @@
       USE_SERIAL.begin(115200);
       delay(200);
       uiTimerInit(200);
-
+      
       
       //Setup Buttons
       while (!setupMcp(&mcp));
@@ -102,7 +103,7 @@
     void loop() {
 
    
-        if (waitUserACK_count < waitUserACK){
+      if (waitUserACK_count < waitUserACK){
         delay(100);
         waitUserACK_count++;
       }
@@ -113,9 +114,13 @@
         cur_state = state_transitions[cur_state][rc];
         waitUserACK_count=0;
       }
-
-
-      if (refreshUI){        
+      
+    
+      if (refreshUI){ 
+        for(int i=0;i<5;i++){
+        if (Services.activeServices[i]) mcp.digitalWrite(Services.serviceLED[i],HIGH);
+        else mcp.digitalWrite(Services.serviceLED[i],LOW);
+       }
         clearTerminal();
         USE_SERIAL.print(toPrint);
         refreshUI=false;

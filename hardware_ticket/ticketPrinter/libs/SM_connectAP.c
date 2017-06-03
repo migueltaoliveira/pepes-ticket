@@ -8,7 +8,7 @@ enum ret_codes SM_connectAP_state(void){
     toPrint+="\r\n";
     
     connectAP(&AP.ssid[0],&AP.password[0],T0,&WiFi);
-  
+  	// LED_count=0;
     
     return ok;
     

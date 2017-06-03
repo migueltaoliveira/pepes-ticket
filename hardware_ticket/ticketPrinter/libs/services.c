@@ -11,4 +11,5 @@ String labels[5]={
 	"PASTELARIA"	
 
 };
+int serviceLED[5]={13,12,11,10,9};
 };
