@@ -6,12 +6,12 @@ package com.fcouceiro.pepesticket.communication.models;
 
 public class Ticket {
 
-    private long ticketNumber;
+    private long ticketId;
 
     private Service service;
 
     public long getTicketNumber() {
-        return ticketNumber;
+        return ticketId;
     }
 
     public Service getService() {

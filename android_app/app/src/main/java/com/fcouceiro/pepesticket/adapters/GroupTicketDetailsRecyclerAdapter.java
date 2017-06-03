@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fcouceiro.pepesticket.R;
+import com.fcouceiro.pepesticket.communication.models.GroupTicket;
 import com.fcouceiro.pepesticket.communication.models.Ticket;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by joaopedro on 03-06-2017.
@@ -17,41 +19,20 @@ import java.util.ArrayList;
 
 public class GroupTicketDetailsRecyclerAdapter extends RecyclerView.Adapter<GroupTicketDetailsRecyclerAdapter.TicketHolder> {
 
-    private ArrayList<Ticket> tickets;
+    private List<Ticket> tickets;
 
-
-    public static class TicketHolder extends RecyclerView.ViewHolder {
-
-        private TextView serviceTextView;
-
-        private TextView currentTicketTextView; // corresponde ao número atual da senha de um determinado serviço
-
-        private TextView actualTicketview; // corresponde ao número da senha que calha ao utilizador
-
-        private Ticket ticketItem;
-
-
-        public TicketHolder(View itemView) {
-            super(itemView);
-
-            serviceTextView = (TextView) itemView.findViewById(R.id.ticket_service);
-            currentTicketTextView = (TextView) itemView.findViewById(R.id.ticket_current_number);
-            actualTicketview = (TextView) itemView.findViewById(R.id.ticket_actual_number);
-        }
-
-        public void bindTicket(Ticket item){
-
-            ticketItem = item;
-
-            serviceTextView.setText(ticketItem.getService().getName());
-            actualTicketview.setText(String.valueOf(ticketItem.getTicketNumber()));
-            //TODO: SACAR O NÚMERO ATUAL DA SENHA
-
-        }
+    public GroupTicketDetailsRecyclerAdapter(){
+        this.tickets = new ArrayList<>();
     }
 
-    public GroupTicketDetailsRecyclerAdapter(ArrayList<Ticket> items){
-        this.tickets = items;
+    public void addItems(List<Ticket> items) {
+        tickets.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    public void clear(){
+        tickets.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -70,5 +51,33 @@ public class GroupTicketDetailsRecyclerAdapter extends RecyclerView.Adapter<Grou
     @Override
     public int getItemCount() {
         return tickets.size();
+    }
+
+    public static class TicketHolder extends RecyclerView.ViewHolder {
+
+        private TextView serviceTextView;
+
+        private TextView currentTicketTextView;
+
+        private TextView actualTicketview;
+
+        private Ticket ticketItem;
+
+
+        public TicketHolder(View itemView) {
+            super(itemView);
+
+            serviceTextView = (TextView) itemView.findViewById(R.id.ticket_service);
+            currentTicketTextView = (TextView) itemView.findViewById(R.id.ticket_current_number);
+            actualTicketview = (TextView) itemView.findViewById(R.id.ticket_actual_number);
+        }
+
+        public void bindTicket(Ticket item){
+            ticketItem = item;
+
+            serviceTextView.setText(ticketItem.getService().getName());
+            actualTicketview.setText(String.valueOf(ticketItem.getTicketNumber()));
+            //TODO: SACAR O NÚMERO ATUAL DA SENHA
+        }
     }
 }

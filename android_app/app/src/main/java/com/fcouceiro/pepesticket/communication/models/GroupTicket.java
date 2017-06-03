@@ -14,7 +14,7 @@ public class GroupTicket {
 
     private String userId;
 
-    public List<Ticket> getTicket() {
+    public List<Ticket> getTickets() {
         return ticket;
     }
 

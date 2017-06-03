@@ -23,7 +23,7 @@ public interface ApiService {
     Call<List<GroupTicket>> getGroupTickets();
 
     @GET("tickets/{id}")
-    Call<GroupTicket> getGroupTicket(@Path("id") int id);
+    Call<GroupTicket> getGroupTicket(@Path("id") long id);
 
     @GET("tickets/{id}/nextService")
     Call<Service> getGroupTicketNextService(@Path("id") int id);

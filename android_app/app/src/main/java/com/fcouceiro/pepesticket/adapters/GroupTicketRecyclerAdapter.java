@@ -62,8 +62,6 @@ public class GroupTicketRecyclerAdapter extends RecyclerView.Adapter<GroupTicket
 
         private GroupTicket groupTicket;
 
-        private static final String GROUP_KEY = "GROUP";
-
         public GroupTicketHolder(View v){
             super(v);
 
@@ -73,11 +71,10 @@ public class GroupTicketRecyclerAdapter extends RecyclerView.Adapter<GroupTicket
         }
 
         public void bindGroupTicket(GroupTicket group) {
-
             groupTicket = group;
 
             String serviceNames = "";
-            for (Ticket ticket : group.getTicket()) {
+            for (Ticket ticket : group.getTickets()) {
                 serviceNames += ticket.getService().getName() + ", ";
             }
 
@@ -88,7 +85,7 @@ public class GroupTicketRecyclerAdapter extends RecyclerView.Adapter<GroupTicket
         public void onClick(View v) {
             Context context = itemView.getContext();
             Intent showGroupTicketDetailsIntent = new Intent(context, GroupTicketDetailsActivity.class);
-            showGroupTicketDetailsIntent.putExtra(GROUP_KEY, groupTicket.getId());
+            showGroupTicketDetailsIntent.putExtra(GroupTicketDetailsActivity.EXTRA_GROUP_TICKET_ID, groupTicket.getId());
             context.startActivity(showGroupTicketDetailsIntent);
         }
     }
