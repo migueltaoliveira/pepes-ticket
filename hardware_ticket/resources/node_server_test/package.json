@@ -1,0 +1,13 @@
+{
+  "name": "static-server",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "author": "André Couceiro",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.0.0",
+    "formidable": "^1.0.17",
+    "morgan": "~1.0.0"
+  }
+}
