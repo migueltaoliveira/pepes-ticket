@@ -94,8 +94,15 @@ public class MarketAPI
     @Produces({MediaType.APPLICATION_JSON})
     public Response getNextService(@QueryParam("userId") String userId, @PathParam("id") Long id)
     {
-        Service services = this.marketManager.getNextService(userId, id);
-        return Response.status(Response.Status.OK).entity(gson.toJson(services)).build();
+        Service service = this.marketManager.getNextService(userId, id);
+        if (service != null)
+        {
+            return Response.status(Response.Status.OK).entity(gson.toJson(service)).build();
+        }
+        else
+        {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     /**

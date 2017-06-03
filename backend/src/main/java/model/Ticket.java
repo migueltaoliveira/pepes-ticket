@@ -48,12 +48,12 @@ public class Ticket
         this.finished = finished;
     }
 
-    public Long getTicketNumber() {
+    public Long getTicketId() {
         return ticketId;
     }
 
-    public void setTicketNumber(Long ticketNumber) {
-        this.ticketId = ticketNumber;
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
     public Long getGroupTicketId() {
