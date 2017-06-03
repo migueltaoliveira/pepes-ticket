@@ -27,7 +27,7 @@ void sendRequest(struct httpReq* req, struct httpResp* resp, WiFiClient * client
     toSend="POST " + req->url + " HTTP/1.1\r\n" +
                "Host: " + req->host + "\r\n" + 
                "Connection: close\r\n" +
-               "Content-Type: application/x-www-form-urlencoded\r\n"+
+               "Content-Type: application/json\r\n"+
                "Content-Length: "+String(req->payload.length())+"\r\n" + 
                "\r\n" +
                req->payload.c_str()+"\r\n";  
@@ -95,13 +95,11 @@ void sendRequest(struct httpReq* req, struct httpResp* resp, WiFiClient * client
       resp->connection=buf;
       buf="";
     }
-    else if (line.startsWith("Payload: ")){
-      idx = (sizeof("Payload: ")/sizeof(char))-1;
-      buf = line.substring(idx,idx+resp->contentLength);
+    else if (line.startsWith("{")){
+      buf = line;
       resp->payload=buf;
       buf="";
     }
-    else{}
   }
 
   // Serial.println("HTTP_Status: "+String(resp->httpStatus));

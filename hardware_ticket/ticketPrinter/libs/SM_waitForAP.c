@@ -10,6 +10,7 @@ enum ret_codes SM_waitForAP_state(void){
 
 		case 0:{
 			toPrint+="Failed to Connect";
+			waitUserACK=20;
 			return fail;
 			break;
 		}
@@ -17,6 +18,7 @@ enum ret_codes SM_waitForAP_state(void){
 		case 1:{
 			toPrint+="Connected to RX: ";
 			toPrint+=AP.ssid;
+			waitUserACK=20;
 			return ok;
 			break;
 		}

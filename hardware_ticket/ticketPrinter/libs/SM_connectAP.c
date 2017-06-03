@@ -1,6 +1,6 @@
 //Connect to AP
 enum ret_codes SM_connectAP_state(void){
-    
+
     toPrint="Connecting to ssid: ";
     toPrint+= AP.ssid;
     toPrint+= "\tpass: ";

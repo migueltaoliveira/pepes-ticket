@@ -1,7 +1,7 @@
 
 struct accessPoint{
-String ssid = "Landing.careers";
-String password = "landing17";
+String ssid = "iPhone de Francisco";
+String password = "randompassword";
 long timeout=20000;
 };
 
@@ -17,10 +17,10 @@ struct httpResp {
 
 
 struct httpReq {
-  String type = "GET";
-  const char* host="192.168.123.99";
-  const int httpPort=5347;
-  String url = "/";
+  String type = "POST";
+  const char* host="bdf89679.ngrok.io";
+  const int httpPort=80;
+  String url = "/market/rest/endpoints/tickets/generate";
   String connection = "close";
   String payload;
 };
