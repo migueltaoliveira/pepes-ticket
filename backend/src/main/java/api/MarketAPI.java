@@ -133,10 +133,10 @@ public class MarketAPI
     {
         logger.info("DELETE /tickets/" + id + "?userId=" + userId);
 
-        boolean deleted = this.marketManager.deleteTicket(userId, id);
-        if (deleted)
+        GroupTicket deleted = this.marketManager.deleteTicket(userId, id);
+        if (deleted != null)
         {
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).entity(gson.toJson(deleted)).build();
         }
         else
         {

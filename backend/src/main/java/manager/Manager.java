@@ -23,7 +23,7 @@ public interface Manager
 
     List<Service> getServices();
 
-    boolean deleteTicket(String userId, Long id);
+    GroupTicket deleteTicket(String userId, Long id);
 
     List<GroupTicket> getTickets(String userId);
 

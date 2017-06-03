@@ -5,30 +5,64 @@
 
 <body>
     <script type="text/javascript">
-    var servicesUrl = "";
-    var clicks = 0;
-    function onClick() {
-        clicks += 1;
+    var servicesUrl = "http://95f9a241.ngrok.io/market/rest/endpoints/services/";
+    
+    var kvArray = [{key: "TALHO", value: 1}, {key: "PADARIA", value: 1}, {key: "PEIXARIA", value: 1},
+     {key:"CHARCUTARIA", value: 1}, {key: "PASTELARIA", value: 1}];
+
+    var tickets = kvArray.map(function(obj) { 
+       var rObj = {};
+       rObj[obj.key] = obj.value;
+       return rObj;
+    });
+
+    function onClick(key) {
+        var response;
+        if (key == 81)
+        {
+            httpGet(servicesUrl + "TALHO/nextTicket");
+        } else if (key == 87)
+        {
+            httpGet(servicesUrl + "PADARIA/nextTicket");
+        } else if (key == 69)
+        {
+            httpGet(servicesUrl + "PEIXARIA/nextTicket");
+        } else if (key = 82)
+        {
+            httpGet(servicesUrl + "CHARCUTARIA/nextTicket");
+        } else if (key = 84)
+        {
+            httpGet(servicesUrl + "PASTELARIA/nextTicket");
+        }
+
+
         document.getElementById("clicks").innerHTML = clicks;
     };
 
     function httpGet(theUrl)
     {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-        xmlHttp.send( null );
-        return xmlHttp.responseText;
+        console.log(theUrl);
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", theUrl, false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
+        xhttp.setRequestHeader("Access-Control-Allow-Methods", "*");
+
+        xhttp.send();
+        var response = JSON.parse(xhttp.responseText);
+        console.log(response);
+        return response;
     }
 
     window.onkeyup = function(e) 
     {
        var key = e.keyCode ? e.keyCode : e.which;
 
-       if (key == 38) {
-           playerSpriteX += 10;
-       }else if (key == 40) {
-           playerSpriteX -= 10;
-       }
+        //q, w, e, r, t
+        console.log(key);
+
+
+       onClick(key);
     }
 
     </script>
