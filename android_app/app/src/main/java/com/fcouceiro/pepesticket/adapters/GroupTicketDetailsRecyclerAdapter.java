@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fcouceiro.pepesticket.R;
-import com.fcouceiro.pepesticket.communication.models.GroupTicket;
 import com.fcouceiro.pepesticket.communication.models.Ticket;
 
 import java.util.ArrayList;
@@ -57,9 +56,9 @@ public class GroupTicketDetailsRecyclerAdapter extends RecyclerView.Adapter<Grou
 
         private TextView serviceTextView;
 
-        private TextView currentTicketTextView;
+        private TextView ticketTextView;
 
-        private TextView actualTicketview;
+        private TextView actualTicketView;
 
         private Ticket ticketItem;
 
@@ -68,16 +67,16 @@ public class GroupTicketDetailsRecyclerAdapter extends RecyclerView.Adapter<Grou
             super(itemView);
 
             serviceTextView = (TextView) itemView.findViewById(R.id.ticket_service);
-            currentTicketTextView = (TextView) itemView.findViewById(R.id.ticket_current_number);
-            actualTicketview = (TextView) itemView.findViewById(R.id.ticket_actual_number);
+            ticketTextView = (TextView) itemView.findViewById(R.id.ticket_number);
+            actualTicketView = (TextView) itemView.findViewById(R.id.ticket_actual_number);
         }
 
         public void bindTicket(Ticket item){
             ticketItem = item;
 
             serviceTextView.setText(ticketItem.getService().getName());
-            actualTicketview.setText(String.valueOf(ticketItem.getTicketNumber()));
-            //TODO: SACAR O NÚMERO ATUAL DA SENHA
+            ticketTextView.setText(String.valueOf(ticketItem.getTicketNumber()));
+            actualTicketView.setText("(n/a)"); // TODO: get from API
         }
     }
 }
