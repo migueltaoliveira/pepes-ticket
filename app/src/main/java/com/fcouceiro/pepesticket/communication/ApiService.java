@@ -28,7 +28,7 @@ public interface ApiService {
     Call<Service> getGroupTicketNextService(@Path("id") int id);
 
     @POST("tickets/generate")
-    Call<GroupTicket> generateGroupTicket(@Body List<Service> services);
+    Call<GroupTicket> generateGroupTicket(@Body List<String> services);
 
     @DELETE("tickets/{id}")
     Call deleteTicket(@Path("id") int id);
