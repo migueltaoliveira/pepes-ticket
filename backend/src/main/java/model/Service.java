@@ -13,6 +13,8 @@ public class Service
     private String name;
     //Pair GroupId, TicketId
     private LinkedList<Pair<Long, Long>> queue;
+    @Expose
+    private Ticket actualTicket;
 
     public Service(String name)
     {
@@ -34,5 +36,13 @@ public class Service
 
     public void setQueue(LinkedList<Pair<Long, Long>> queue) {
         this.queue = queue;
+    }
+
+    public Ticket getActualTicket() {
+        return actualTicket;
+    }
+
+    public void setActualTicket(Ticket actualTicket) {
+        this.actualTicket = actualTicket;
     }
 }

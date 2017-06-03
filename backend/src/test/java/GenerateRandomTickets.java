@@ -13,6 +13,6 @@ public class GenerateRandomTickets
 
         marketManager.generateGroupTicket("pepe", Arrays.asList("CHARCUTARIA","TALHO"));
         marketManager.generateGroupTicket("JPP", Arrays.asList("TALHO","PADARIA"));
-
+        marketManager.generateGroupTicket("JPP", Arrays.asList("TALHO","CHARCUTARIA"));
     }
 }

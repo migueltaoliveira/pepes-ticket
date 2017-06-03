@@ -70,9 +70,9 @@ public class MarketAPI
      * Returns the group ticket by its id
      * */
     @GET
-    @Path("/tickets/id")
+    @Path("/tickets/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getTickets(@QueryParam("userId") String userId, @QueryParam("id") Long id)
+    public Response getTickets(@QueryParam("userId") String userId, @PathParam("id") Long id)
     {
         GroupTicket groupTicket = this.marketManager.getTicket(userId, id);
 
@@ -90,9 +90,9 @@ public class MarketAPI
      * Get the nextService for a certain group ticket
      * */
     @GET
-    @Path("/tickets/id/nextService")
+    @Path("/tickets/{id}/nextService")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getNextService(@QueryParam("userId") String userId, @QueryParam("id") Long id)
+    public Response getNextService(@QueryParam("userId") String userId, @PathParam("id") Long id)
     {
         Service services = this.marketManager.getNextService(userId, id);
         return Response.status(Response.Status.OK).entity(gson.toJson(services)).build();
@@ -114,8 +114,8 @@ public class MarketAPI
     * Deletes a group ticket
     * */
     @DELETE
-    @Path("/tickets/id")
-    public Response deleteTicket(@QueryParam("userId") String userId, @QueryParam("id") Long id)
+    @Path("/tickets/{id}")
+    public Response deleteTicket(@QueryParam("userId") String userId, @PathParam("id") Long id)
     {
         boolean deleted = this.marketManager.deleteTicket(userId, id);
         if (deleted)

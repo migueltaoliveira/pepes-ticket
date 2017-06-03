@@ -72,7 +72,7 @@ public class MarketManager implements Manager
             {
                 Long ticketNumber = incrementTicketNumberByService(new Service(service));
 
-                //Add this ticket to the list
+                //Add this ticket to the queue list
                 synchronized (this.services)
                 {
                     this.services.get(service).getQueue().add(new Pair<>(groupTicket.getId(), ticketNumber));
@@ -159,29 +159,16 @@ public class MarketManager implements Manager
         int cleanByIndex = 0;
         boolean clean = false;
 
-        synchronized (this.groupTickets)
+        //Free the service
+        if (service.getActualTicket() != null)
         {
+            Ticket ticket = service.getActualTicket();
 
-            //First we need to mark the previous ticket as finished
-            for (int i = 0; i < service.getQueue().size(); i++) {
-                cleanByIndex = i;
-
-                Pair<Long, Long> ticketsPair = service.getQueue().get(i);
-
-                for (Ticket ticket : this.groupTickets.get(ticketsPair.getLeft()).getTicket()) {
-                    if (ticket.getTicketNumber().equals(ticketsPair.getRight()) && ticket.getService().getName().equals(service.getName())) {
-                        if (ticket.isBusy()) {
-                            ticket.setBusy(false);
-                            ticket.setFinished(true);
-                            clean = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (clean) {
-                    break;
-                }
+            synchronized (ticket)
+            {
+                ticket.setFinished(true);
+                ticket.setBusy(false);
+                service.setActualTicket(null);
             }
         }
 
@@ -194,15 +181,19 @@ public class MarketManager implements Manager
             }
         }
 
+        //The decision process needs to assure that no service is interfering
         synchronized (this.groupTickets)
         {
-            // We iterate to check which ticket is choosed
-            for (int i = 0; i < service.getQueue().size(); i++) {
+            // We iterate to check which ticket is chosen
+            for (int i = 0; i < service.getQueue().size(); i++)
+            {
                 Pair<Long, Long> ticketsPair = service.getQueue().get(i);
 
                 for (Ticket ticket : this.groupTickets.get(ticketsPair.getLeft()).getTicket()) {
-                    if (ticket.getTicketNumber().equals(ticketsPair.getRight())) {
-                        if (!ticket.isFinished() && !ticket.isBusy()) {
+                    if (ticket.getTicketNumber().equals(ticketsPair.getRight()))
+                    {
+                        if (!ticket.isFinished() && !ticket.isBusy())
+                        {
                             return ticket;
                         }
                     }
@@ -218,9 +209,11 @@ public class MarketManager implements Manager
     {
         if (Constants.SERVICES.contains(serviceName))
         {
-            synchronized (this.services)
+            Service service = this.services.get(serviceName);
+            //We lock the service to assure that no one is modifing the actual service state
+            synchronized (service)
             {
-                return chooseTicketToServiceName(this.services.get(serviceName));
+                return chooseTicketToServiceName(service);
             }
         }
         else
