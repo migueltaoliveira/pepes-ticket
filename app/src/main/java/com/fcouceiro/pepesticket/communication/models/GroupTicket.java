@@ -7,8 +7,11 @@ import java.util.List;
  */
 
 public class GroupTicket {
+
     private List<Ticket> ticket;
+
     private long id;
+
     private long userId;
 
     public List<Ticket> getTicket() {

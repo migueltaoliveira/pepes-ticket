@@ -5,9 +5,10 @@ package com.fcouceiro.pepesticket.communication.models;
  */
 
 public class Service {
+
+    private String name;
+
     public String getName() {
         return name;
     }
-
-    private String name;
 }

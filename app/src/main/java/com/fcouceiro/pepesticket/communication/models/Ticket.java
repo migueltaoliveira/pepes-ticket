@@ -5,6 +5,7 @@ package com.fcouceiro.pepesticket.communication.models;
  */
 
 public class Ticket {
+
     private long ticketNumber;
 
     private Service service;

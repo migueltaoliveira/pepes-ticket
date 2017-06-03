@@ -36,8 +36,8 @@ public interface ApiService {
     @GET("services")
     Call<List<Service>> getServices();
 
-    @GET("services/{id}/nextTicket")
-    Call<Ticket> getServiceNextTicket(@Path("id") int id);
+    @GET("services/{name}/nextTicket")
+    Call<Ticket> getServiceNextTicket(@Path("name") String name);
 
     @POST("authenticate")
     Call<String> authenticate();
