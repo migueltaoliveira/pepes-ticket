@@ -11,7 +11,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class API {
 
-    private static final String BASE_URL = "https://85183bda.ngrok.io/market/rest/endpoints/";
+    private static final String BASE_URL = "https://02749d47.ngrok.io/market/rest/endpoints/";
 
     private static ApiService apiService;
 
