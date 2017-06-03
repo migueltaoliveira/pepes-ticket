@@ -65,7 +65,7 @@ public class PrinterRecyclerAdapter extends RecyclerView.Adapter<PrinterRecycler
         return services.size();
     }
 
-    public static class ServiceHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+    public static class ServiceHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
         private TextView label;
 
@@ -78,7 +78,7 @@ public class PrinterRecyclerAdapter extends RecyclerView.Adapter<PrinterRecycler
 
             label = (TextView) v.findViewById(R.id.label);
             checkBox = (CheckBox) v.findViewById(R.id.checkbox);
-            checkBox.setOnCheckedChangeListener(this);
+            v.setOnClickListener(this);
         }
 
         public void bindGroupTicket(Service service) {
@@ -91,6 +91,12 @@ public class PrinterRecyclerAdapter extends RecyclerView.Adapter<PrinterRecycler
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             service.setChecked(isChecked);
+        }
+
+        @Override
+        public void onClick(View v) {
+            service.setChecked(!checkBox.isChecked());
+            checkBox.setChecked(!checkBox.isChecked());
         }
     }
 }
