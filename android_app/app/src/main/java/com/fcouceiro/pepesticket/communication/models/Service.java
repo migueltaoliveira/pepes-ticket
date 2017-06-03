@@ -12,7 +12,7 @@ public class Service {
 
     private boolean isChecked = false;
 
-    private Ticket actualTicket;
+    private long actualTicketId;
 
     public String getName() {
         return name;
@@ -26,7 +26,7 @@ public class Service {
         isChecked = checked;
     }
 
-    public Ticket getActualTicket() {
-        return actualTicket;
+    public long getActualTicketId() {
+        return actualTicketId;
     }
 }

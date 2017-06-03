@@ -32,7 +32,7 @@ public interface ApiService {
     Call<GroupTicket> generateGroupTicket(@Body ServiceListWrapper services);
 
     @DELETE("tickets/{id}")
-    Call deleteTicket(@Path("id") int id);
+    Call<GroupTicket> deleteTicket(@Path("id") long id);
 
     @GET("services")
     Call<List<Service>> getServices();

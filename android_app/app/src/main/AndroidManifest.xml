@@ -19,8 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.PrinterActivity"></activity>
-        <activity android:name=".activities.GroupTicketDetailsActivity"></activity>
+        <activity
+            android:name=".activities.PrinterActivity"
+            android:label="@string/get_ticket_label">
+        </activity>
+        <activity
+            android:name=".activities.GroupTicketDetailsActivity"
+            android:label="@string/ticket_list_label">
+        </activity>
     </application>
 
 </manifest>

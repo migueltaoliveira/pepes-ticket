@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -72,6 +73,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new GroupTicketRecyclerAdapter();
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            public boolean onMove(RecyclerView recyclerView,
+                                  RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//                    final int fromPos = viewHolder.getAdapterPosition();
+//                    final int toPos = viewHolder.getAdapterPosition();
+//                    // move item in `fromPos` to `toPos` in adapter.
+                return true;// true if moved, false otherwise
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                //Remove swiped item from list and notify the RecyclerView
+                long removedId = adapter.removeItem(viewHolder.getLayoutPosition());
+                API.getService().deleteTicket(removedId).enqueue(deleteTicketCallback);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private String inflateUserId() {
@@ -126,6 +146,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onFailure(Call<List<GroupTicket>> call, Throwable t) {
             Toast.makeText(getBaseContext(), getString(R.string.group_tickets_not_available), Toast.LENGTH_LONG).show();
+        }
+    };
+
+    private Callback<GroupTicket> deleteTicketCallback = new Callback<GroupTicket>() {
+        @Override
+        public void onResponse(Call<GroupTicket> call, Response<GroupTicket> response) {
+            if(!response.isSuccessful()){
+                Toast.makeText(getBaseContext(), R.string.failed_remove_group_tickets, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<GroupTicket> call, Throwable t) {
+            Toast.makeText(getBaseContext(), R.string.failed_remove_group_tickets, Toast.LENGTH_LONG).show();
         }
     };
 

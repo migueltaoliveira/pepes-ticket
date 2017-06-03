@@ -12,6 +12,7 @@ import com.fcouceiro.pepesticket.activities.GroupTicketDetailsActivity;
 import com.fcouceiro.pepesticket.R;
 import com.fcouceiro.pepesticket.communication.models.GroupTicket;
 import com.fcouceiro.pepesticket.communication.models.Ticket;
+import com.fcouceiro.pepesticket.components.GroupTicketView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,14 @@ public class GroupTicketRecyclerAdapter extends RecyclerView.Adapter<GroupTicket
     public void addItems(List<GroupTicket> items) {
         groupTicket.addAll(items);
         notifyDataSetChanged();
+    }
+
+
+    public long removeItem(int position){
+        GroupTicket removedItem = groupTicket.remove(position);
+        notifyItemRemoved(position);
+
+        return removedItem.getId();
     }
 
     public void clear(){
@@ -58,27 +67,21 @@ public class GroupTicketRecyclerAdapter extends RecyclerView.Adapter<GroupTicket
 
     public static class GroupTicketHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView item;
+        private GroupTicketView groupTicketView;
 
         private GroupTicket groupTicket;
 
         public GroupTicketHolder(View v){
             super(v);
 
-            item = (TextView) v.findViewById(R.id.group_ticket_item);
+            groupTicketView = (GroupTicketView) v;
 
             v.setOnClickListener(this);
         }
 
         public void bindGroupTicket(GroupTicket group) {
             groupTicket = group;
-
-            String serviceNames = "";
-            for (Ticket ticket : group.getTickets()) {
-                serviceNames += ticket.getService().getName() + ", ";
-            }
-
-            item.setText(serviceNames);
+            groupTicketView.setGroupTicket(groupTicket);
         }
 
         @Override

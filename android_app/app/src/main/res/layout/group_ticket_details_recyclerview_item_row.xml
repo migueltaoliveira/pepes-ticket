@@ -28,7 +28,7 @@
             android:gravity="center_vertical"
             android:text="Cafetaria"
             android:textColor="@android:color/white"
-            android:textSize="24dp" />
+            android:textSize="@dimen/font_md" />
 
         <ImageView
             android:layout_width="35dp"
@@ -53,7 +53,7 @@
                 android:text="7"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:textSize="18dp" />
+                android:textSize="@dimen/font_sm" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
                 android:text="Ticket"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:textSize="12dp" />
+                android:textSize="@dimen/font_xs" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,7 +81,7 @@
                 android:text="(3)"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:textSize="18dp"/>
+                android:textSize="@dimen/font_sm"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                 android:text="Current"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:textSize="12dp" />
+                android:textSize="@dimen/font_xs" />
         </LinearLayout>
     </LinearLayout>
 
