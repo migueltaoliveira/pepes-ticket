@@ -1,4 +1,4 @@
-package com.fcouceiro.pepesticket;
+package com.fcouceiro.pepesticket.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.fcouceiro.pepesticket.activities.GroupTicketDetailsActivity;
+import com.fcouceiro.pepesticket.R;
 import com.fcouceiro.pepesticket.communication.models.GroupTicket;
 import com.fcouceiro.pepesticket.communication.models.Ticket;
 
@@ -19,11 +21,11 @@ import java.util.List;
  */
 
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.GroupTicketHolder> {
+public class GroupTicketRecyclerAdapter extends RecyclerView.Adapter<GroupTicketRecyclerAdapter.GroupTicketHolder> {
 
     private List<GroupTicket> groupTicket;
 
-    public RecyclerAdapter() {
+    public GroupTicketRecyclerAdapter() {
         this.groupTicket = new ArrayList<>();
     }
 
@@ -38,14 +40,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.GroupT
     }
 
     @Override
-    public RecyclerAdapter.GroupTicketHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GroupTicketRecyclerAdapter.GroupTicketHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recyclerview_item_row, parent, false);
+                .inflate(R.layout.group_ticket_recyclerview_item_row, parent, false);
         return new GroupTicketHolder(inflatedView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapter.GroupTicketHolder holder, int position) {
+    public void onBindViewHolder(GroupTicketRecyclerAdapter.GroupTicketHolder holder, int position) {
         GroupTicket item = groupTicket.get(position);
         holder.bindGroupTicket(item);
     }
@@ -58,7 +60,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.GroupT
 
         private TextView item;
 
-        public GroupTicketHolder(View v) {
+        private GroupTicket groupTicket;
+
+        private static final String GROUP_KEY = "GROUP";
+
+        public GroupTicketHolder(View v){
             super(v);
 
             item = (TextView) v.findViewById(R.id.group_ticket_item);
@@ -67,6 +73,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.GroupT
         }
 
         public void bindGroupTicket(GroupTicket group) {
+
+            groupTicket = group;
 
             String serviceNames = "";
             for (Ticket ticket : group.getTicket()) {
@@ -80,7 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.GroupT
         public void onClick(View v) {
             Context context = itemView.getContext();
             Intent showGroupTicketDetailsIntent = new Intent(context, GroupTicketDetailsActivity.class);
-            //showGroupTicketDetailsIntent.putExtra();
+            showGroupTicketDetailsIntent.putExtra(GROUP_KEY, groupTicket.getId());
             context.startActivity(showGroupTicketDetailsIntent);
         }
     }

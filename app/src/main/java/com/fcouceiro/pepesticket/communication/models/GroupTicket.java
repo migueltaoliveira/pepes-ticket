@@ -12,7 +12,7 @@ public class GroupTicket {
 
     private long id;
 
-    private long userId;
+    private String userId;
 
     public List<Ticket> getTicket() {
         return ticket;
@@ -22,7 +22,7 @@ public class GroupTicket {
         return id;
     }
 
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 

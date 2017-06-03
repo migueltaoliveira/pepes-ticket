@@ -5,4 +5,8 @@
     <string name="preference_user_id_key">preference_user_id_key</string>
     <string name="authentication_failed">Authentication failed</string>
     <string name="group_tickets_not_available">Group tickets not available</string>
+    <string name="services_not_available">Services not available</string>
+    <string name="get_ticket">Get ticket!</string>
+    <string name="failed_to_generate_ticket">Failed to generate ticket.</string>
+    <string name="select_one_service">Please select at least one service</string>
 </resources>

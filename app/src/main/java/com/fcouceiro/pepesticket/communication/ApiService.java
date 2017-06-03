@@ -2,6 +2,7 @@ package com.fcouceiro.pepesticket.communication;
 
 import com.fcouceiro.pepesticket.communication.models.GroupTicket;
 import com.fcouceiro.pepesticket.communication.models.Service;
+import com.fcouceiro.pepesticket.communication.models.ServiceListWrapper;
 import com.fcouceiro.pepesticket.communication.models.Ticket;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface ApiService {
     Call<Service> getGroupTicketNextService(@Path("id") int id);
 
     @POST("tickets/generate")
-    Call<GroupTicket> generateGroupTicket(@Body List<String> services);
+    Call<GroupTicket> generateGroupTicket(@Body ServiceListWrapper services);
 
     @DELETE("tickets/{id}")
     Call deleteTicket(@Path("id") int id);

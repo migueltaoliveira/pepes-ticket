@@ -1,4 +1,4 @@
-package com.fcouceiro.pepesticket;
+package com.fcouceiro.pepesticket.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,40 +8,34 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.fcouceiro.pepesticket.communication.ApiService;
+import com.fcouceiro.pepesticket.R;
+import com.fcouceiro.pepesticket.adapters.GroupTicketRecyclerAdapter;
+import com.fcouceiro.pepesticket.communication.API;
 import com.fcouceiro.pepesticket.communication.AuthenticationInterceptor;
 import com.fcouceiro.pepesticket.communication.models.GroupTicket;
 
 import java.util.List;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String BASE_URL = "https://cc9578d7.ngrok.io/market/rest/endpoints/";
     private static final String TAG = "RestTestActivity";
 
     // Request codes
     private static final int RC_PRINT_TICKET = 0x23;
 
-    private ApiService apiService;
     private SharedPreferences sharedPref;
 
     // UI references
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private RecyclerAdapter adapter;
+    private GroupTicketRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Inflate user id
         String userId = inflateUserId();
 
-        // Create REST service
-        this.apiService = createApiService(userId);
+        // Initialize REST service
+        API.initialize(userId);
 
         // Check if user has an identification already (request otherwise)
         if (userId == null) {
-            this.apiService.authenticate().enqueue(authenticationCallback);
+            API.getService().authenticate().enqueue(authenticationCallback);
         } else {
-            this.apiService.getGroupTickets().enqueue(groupTicketsCallback);
+            API.getService().getGroupTickets().enqueue(groupTicketsCallback);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -76,8 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        adapter = new RecyclerAdapter();
+        adapter = new GroupTicketRecyclerAdapter();
         recyclerView.setAdapter(adapter);
     }
 
@@ -87,28 +80,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void persistUserId(String userId) {
         sharedPref.edit()
-            .putString(
-                getString(R.string.preference_user_id_key),
-                userId
-            )
-            .commit();
-    }
-
-    private ApiService createApiService(String userId) {
-        // Set authentication interceptor
-        AuthenticationInterceptor.getInstance().setUserId(userId);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(AuthenticationInterceptor.getInstance());
-
-        // Create the service
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(httpClient.build())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        return retrofit.create(ApiService.class);
+                .putString(
+                        getString(R.string.preference_user_id_key),
+                        userId
+                )
+                .commit();
     }
 
     private Callback<String> authenticationCallback = new Callback<String>() {
@@ -163,13 +139,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == RC_PRINT_TICKET){
-            if(resultCode == RESULT_OK){
+        if (requestCode == RC_PRINT_TICKET) {
+            if(resultCode == RESULT_OK) {
                 // Request new group tickets
-                this.apiService.getGroupTickets().enqueue(groupTicketsCallback);
+                API.getService().getGroupTickets().enqueue(groupTicketsCallback);
             }
-        }
-        else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
