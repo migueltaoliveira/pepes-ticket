@@ -31,7 +31,7 @@ enum ret_codes SM_waitForAP_state(void){
 			// onoff_count=0;
 			// LED_count=0;
 			// for (int i=0;i<5;i++) Services.activeServices[i]=false;
-			blinkALL(3);
+			LEDblinkALL(3,200);
 			waitUserACK=20;
 			return ok;
 			break;
