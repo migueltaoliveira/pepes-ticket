@@ -19,13 +19,12 @@
     #include "libs/composeRequest.c"
     unsigned long T0;
 
-    
-
     WiFiClient client;
     struct accessPoint AP;
     struct httpResp resp;
     struct httpReq req;
     
+
    
     //Button Functions
     #include <Wire.h>
@@ -42,7 +41,6 @@
 
 
 
-
     //UI Functions
     #define USE_SERIAL (Serial)
     bool refreshUI;
@@ -56,6 +54,7 @@
     #include "libs/uiTimerInit.c"
     #include "libs/clearTerminal.c"
     
+
     
     //State Machine (SM) Functions
     enum ret_codes { ok, fail, repeat};
@@ -80,7 +79,6 @@
     enum ret_codes (* state_fun)(void);
 
 
-    
 
     void setup() {
    

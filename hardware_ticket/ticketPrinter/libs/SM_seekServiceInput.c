@@ -2,7 +2,14 @@
  enum ret_codes SM_seekServiceInput_state(void){
 
  	  waitUserACK=0;
-    toPrint="Input a Service: ";
+    toPrint="Input a Service: \r\n\r\n";
+    for(int i=0;i<5;i++){
+      toPrint+="\t";
+      toPrint+=String(i+1);
+      toPrint+=" - ";
+      toPrint+=Services.labels[i];
+      toPrint+="\r\n";
+    }
 
 
 
