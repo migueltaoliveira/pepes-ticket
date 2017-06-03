@@ -1,5 +1,4 @@
-    
-    
+
     //General ESP8266 Stuff
     #include <Arduino.h>
     extern "C"
@@ -19,6 +18,8 @@
     #include "libs/sendRequest.c"
     #include "libs/composeRequest.c"
     unsigned long T0;
+
+    
 
     WiFiClient client;
     struct accessPoint AP;

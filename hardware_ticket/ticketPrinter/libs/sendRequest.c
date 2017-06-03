@@ -1,4 +1,9 @@
 
+#include <ArduinoJson.h>
+DynamicJsonBuffer jsonBuffer;
+
+
+
 void sendRequest(struct httpReq* req, struct httpResp* resp, WiFiClient * client,bool showHTTP){
 	
   // Serial.println();
@@ -96,11 +101,31 @@ void sendRequest(struct httpReq* req, struct httpResp* resp, WiFiClient * client
       buf="";
     }
     else if (line.startsWith("{")){
-      buf = line;
-      resp->payload=buf;
-      buf="";
+      //const char buf=line.c_str();
+      //resp->payload=line;
+
+      JsonObject& root = jsonBuffer.parseObject(line);
+      if (!root.success()) {                            // everything OK  
+      resp->payload="ERROR";
+      }
+      else{
+        JsonArray& tickets = root["ticket"];
+
+        resp->payload="";
+        for(int i=0;i<tickets.size();i++){
+          JsonObject& ticket = tickets[i];
+          JsonObject& service = ticket["service"];
+          String name=service["name"];
+          int ticketNumber=ticket["ticketNumber"];
+          resp->payload+=name;
+          resp->payload+=": ";
+          resp->payload+=String(ticketNumber);
+          resp->payload+="\r\n";
+        }
+       }   
     }
   }
+
 
   // Serial.println("HTTP_Status: "+String(resp->httpStatus));
   // Serial.println("closing connection");

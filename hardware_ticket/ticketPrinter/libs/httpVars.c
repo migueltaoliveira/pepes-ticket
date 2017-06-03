@@ -18,7 +18,7 @@ struct httpResp {
 
 struct httpReq {
   String type = "POST";
-  const char* host="bdf89679.ngrok.io";
+  const char* host="86a9e7d5.ngrok.io";
   const int httpPort=80;
   String url = "/market/rest/endpoints/tickets/generate";
   String connection = "close";
