@@ -1,17 +1,27 @@
 package model;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by migueloliveira on 02/06/17.
  */
 public class Ticket
 {
-
+    @Expose
     private Service service;
-    private long ticketNumber;
+    @Expose
+    private Long ticketId;
+    private boolean busy;
+    private boolean finished;
+    //The groupTicket the ticket belongs
+    private Long groupTicketId;
 
-    public Ticket(Service service, long ticketNumber) {
+    public Ticket(Service service, Long ticketId)
+    {
         this.service = service;
-        this.ticketNumber = ticketNumber;
+        this.ticketId = ticketId;
+        this.busy = false;
+        this.finished = false;
     }
 
     public Service getService() {
@@ -22,11 +32,35 @@ public class Ticket
         this.service = service;
     }
 
-    public long getTicketNumber() {
-        return ticketNumber;
+    public boolean isBusy() {
+        return busy;
     }
 
-    public void setTicketNumber(long ticketNumber) {
-        this.ticketNumber = ticketNumber;
+    public void setBusy(boolean busy) {
+        this.busy = busy;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public Long getTicketNumber() {
+        return ticketId;
+    }
+
+    public void setTicketNumber(Long ticketNumber) {
+        this.ticketId = ticketNumber;
+    }
+
+    public Long getGroupTicketId() {
+        return groupTicketId;
+    }
+
+    public void setGroupTicketId(Long groupTicketId) {
+        this.groupTicketId = groupTicketId;
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.List;
 
 /**
@@ -7,11 +9,14 @@ import java.util.List;
  */
 public class GroupTicket
 {
+    @Expose
     private List<Ticket> ticket;
-    private long id;
+    @Expose
+    private Long id;
+    @Expose
     private String userId;
 
-    public GroupTicket(List<Ticket> ticket, long id, String userId) {
+    public GroupTicket(List<Ticket> ticket, Long id, String userId) {
         this.ticket = ticket;
         this.id = id;
         this.userId = userId;
@@ -25,11 +30,11 @@ public class GroupTicket
         this.ticket = ticket;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

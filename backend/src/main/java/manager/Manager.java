@@ -3,6 +3,7 @@ package manager;
 
 import model.GroupTicket;
 import model.Service;
+import model.Ticket;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public interface Manager
     boolean deleteTicket(String userId, Long id);
 
     List<GroupTicket> getTickets(String userId);
+
+    Ticket getNextTicket(String serviceName);
 
     String authentication();
 

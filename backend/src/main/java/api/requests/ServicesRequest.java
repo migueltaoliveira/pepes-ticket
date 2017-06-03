@@ -1,5 +1,7 @@
 package api.requests;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  */
 public class ServicesRequest
 {
+    @Expose
     List<String> services;
 
     public ServicesRequest(List<String> services) {

@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import manager.MarketManager;
 import model.GroupTicket;
 import model.Service;
+import model.Ticket;
 import org.apache.log4j.Logger;
 import utils.Constants;
 
@@ -30,9 +31,12 @@ public class MarketAPI
     public MarketAPI()
     {
         this.marketManager = MarketManager.getInstance();
-        this.gson = new GsonBuilder().create();
+        this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
 
+    /**
+    * Returns the generated group ticket
+    * */
     @POST
     @Path("/tickets/generate")
     @Produces({MediaType.APPLICATION_JSON})
@@ -62,6 +66,9 @@ public class MarketAPI
         }
     }
 
+    /**
+     * Returns the group ticket by its id
+     * */
     @GET
     @Path("/tickets/id")
     @Produces({MediaType.APPLICATION_JSON})
@@ -79,6 +86,9 @@ public class MarketAPI
         }
     }
 
+    /**
+     * Get the nextService for a certain group ticket
+     * */
     @GET
     @Path("/tickets/id/nextService")
     @Produces({MediaType.APPLICATION_JSON})
@@ -88,6 +98,9 @@ public class MarketAPI
         return Response.status(Response.Status.OK).entity(gson.toJson(services)).build();
     }
 
+    /**
+     * Get all the services
+     */
     @GET
     @Path("/services")
     @Produces({MediaType.APPLICATION_JSON})
@@ -97,6 +110,9 @@ public class MarketAPI
         return Response.status(Response.Status.OK).entity(gson.toJson(services)).build();
     }
 
+    /**
+    * Deletes a group ticket
+    * */
     @DELETE
     @Path("/tickets/id")
     public Response deleteTicket(@QueryParam("userId") String userId, @QueryParam("id") Long id)
@@ -112,6 +128,9 @@ public class MarketAPI
         }
     }
 
+    /*
+    * Get all the group tickets for a certain userId
+    * */
     @GET
     @Path("/tickets")
     public Response getTickets(@QueryParam("userId") String userId)
@@ -120,6 +139,27 @@ public class MarketAPI
 
         return Response.status(Response.Status.OK).entity(gson.toJson(tickets)).build();
     }
+
+    /*
+    * Choose the next ticket for that service
+    * */
+    @GET
+    @Path("/services/{service}/nextTicket")
+    public Response getNextTicket(@PathParam("service") String serviceName)
+    {
+        Ticket nextTicket = this.marketManager.getNextTicket(serviceName);
+
+        if (nextTicket != null)
+        {
+            return Response.status(Response.Status.OK).entity(gson.toJson(nextTicket)).build();
+        }
+        else
+        {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+
 
     @POST
     @Path("/authenticate")
