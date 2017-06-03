@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pepes Ticket</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+</head>
+
+<body>
+
+<div class="w3-padding-32 w3-container w3-center">
+  <h1 class="w3-jumbo" id="name"> <b>Pepes Tickets</b></h1>
+</div>
+
+    <script type="text/javascript">
+    var servicesUrl = "http://95f9a241.ngrok.io/market/rest/endpoints/services/";
+    
+    var kvArray = [{key: "TALHO", value: 1}, {key: "PADARIA", value: 1}, {key: "PEIXARIA", value: 1},
+     {key:"CHARCUTARIA", value: 1}, {key: "PASTELARIA", value: 1}];
+
+    var tickets = kvArray.map(function(obj) { 
+       var rObj = {};
+       rObj[obj.key] = obj.value;
+       return rObj;
+    });
+
+    function updateTicket (key, ticketId) {
+        document.getElementById(key).innerHTML = ticketId;
+    }
+
+    function onClick(key) {
+        
+        if (key == 81)
+        {
+            httpGet(servicesUrl + "TALHO/nextTicket", key, updateTicket);
+        } else if (key == 87)
+        {
+            httpGet(servicesUrl + "PADARIA/nextTicket", key, updateTicket);
+        } else if (key == 69)
+        {
+            httpGet(servicesUrl + "PEIXARIA/nextTicket", key, updateTicket);
+        } else if (key == 82)
+        {
+            httpGet(servicesUrl + "CHARCUTARIA/nextTicket", key, updateTicket);
+        } else if (key == 84)
+        {
+            httpGet(servicesUrl + "PASTELARIA/nextTicket", key, updateTicket);
+        }
+
+        
+    }
+
+    function httpGet(theUrl, key, cb)
+    {
+        console.log(theUrl);
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", theUrl, true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
+        xhttp.setRequestHeader("Access-Control-Allow-Methods", "*");
+        xhttp.onload = function () {
+            // do something to response
+            console.log(this.responseText);
+            var response = JSON.parse(this.responseText);
+            
+            // notify callback
+            cb(key, response.ticketId);
+        };
+        xhttp.send();
+    }
+
+    window.onkeyup = function(e) 
+    {
+       var key = e.keyCode ? e.keyCode : e.which;
+       onClick(key);
+
+       //q, w, e, r, t
+        console.log(key);
+    }
+
+    </script>
+
+    <div class="w3-padding-64">
+      <div class="servicos w3-row w3-container"> 
+        <div class="w3-col s2 w3-center w3-margin-right w3-red ">
+          <h1 id="title" ><b>Talho</b></h1>
+          <img src="images/talhowhite.png" class="w3-image">
+          <h3>Senha Atual: <a id="81">0</a></h3>
+        </div>
+        <div class="w3-col s2 w3-center w3-margin-right w3-red ">
+          <h1 id="title" ><b>Padaria</b></h1>
+          <img src="images/padariawhite.png" class="w3-image">
+          <h3>Senha Atual: <a id="87">0</a></h3>
+        </div>
+        <div class="w3-col s2 w3-center w3-margin-right w3-red ">
+          <h1 id="title" ><b>Peixaria</b></h1>
+          <img src="images/peixariawhite.png" class="w3-image">
+          <h3>Senha Atual: <a id="69">0</a></h3>
+        </div>
+        <div class="w3-col s2 w3-center w3-margin-right w3-red ">
+          <h1 id="title" ><b>Charcutaria</b></h1>
+          <img src="images/charcutariawhite.png" class="w3-image">
+          <h3>Senha Atual: <a id="82">0</a></h3>
+        </div>
+        <div class="w3-col s2 w3-center w3-margin-right w3-red ">
+          <h1 id="title" ><b>Pastelaria</b></h1>
+          <img src="images/pastelariawhite.png" class="w3-image">
+          <h3>Senha Atual: <a id="84">0</a></h3>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

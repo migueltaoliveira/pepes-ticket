@@ -1,0 +1,48 @@
+* {box-sizing:border-box}
+
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+body, h1,h2,h3,h4,h5,h6,p {font-family: 'Open Sans', sans-serif;}
+
+header {
+  /* Height and width fallback for older browsers. */
+    height: 100%;
+    width: 100%;
+
+    /* Set the height to match that of the viewport. */
+    height: 100vh;
+
+    /* Set the width to match that of the viewport. */
+    width: 100vw;
+
+    /* Remove any browser-default margins. */
+    margin: 0;
+}
+
+
+.servicos{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#title{
+	text-shadow:1px 1px 0 #888;
+}
+
+body{
+	background-color: #37718E;
+}
+
+#name{
+	color: #FFFFFF;
+}

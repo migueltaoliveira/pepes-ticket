@@ -161,7 +161,7 @@ public class MarketManager implements Manager
 
 
     @Override
-    public boolean deleteTicket(String userId, Long groupId)
+    public GroupTicket deleteTicket(String userId, Long groupId)
     {
         synchronized (this.groupTickets)
         {
@@ -170,12 +170,12 @@ public class MarketManager implements Manager
             if (groupTicket != null) {
                 if (groupTicket.getUserId().equals(userId)) {
                     GroupTicket remove = this.groupTickets.remove(groupId);
-                    return remove != null;
+                    return remove;
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
     @Override
@@ -258,32 +258,53 @@ public class MarketManager implements Manager
         }
     }
 
+    private Ticket getTicketByServiceAndGroup(String serviceName, Long ticketId)
+    {
+        for (Map.Entry<Long, GroupTicket> longGroupTicketEntry : this.groupTickets.entrySet())
+        {
+
+            for (Ticket ticket : longGroupTicketEntry.getValue().getTicket())
+            {
+                if (ticket.getService().getName().equals(serviceName) && ticketId.equals(ticket.getTicketId()))
+                {
+                    return ticket;
+                }
+            }
+
+        }
+        return null;
+    }
 
     private Ticket chooseTicketToServiceName(Service service)
     {
         Long cleanGroupTicket = null;
 
         //Free the service
-        if (service.getActualTicket() != null)
+        if (service.getActualTicketId() != null)
         {
-            Ticket ticket = service.getActualTicket();
+            Long ticketId = service.getActualTicketId();
+            Ticket ticket = getTicketByServiceAndGroup(service.getName(), ticketId);
 
-            synchronized (ticket)
+            if (ticket != null)
             {
-                ticket.setFinished(true);
-                ticket.setBusy(false);
-                service.setActualTicket(null);
-
-                cleanGroupTicket = ticket.getGroupTicketId();
-                GroupTicket groupTicket = this.groupTickets.get(cleanGroupTicket);
-
-                //check if the group ticket was served
-                for (Ticket ticket1 : groupTicket.getTicket())
+                synchronized (ticket)
                 {
-                    if (!ticket1.isFinished())
+                    ticket.setFinished(true);
+                    ticket.setBusy(false);
+                    service.setActualTicketId(null);
+
+                    cleanGroupTicket = ticket.getGroupTicketId();
+                    GroupTicket groupTicket = this.groupTickets.get(cleanGroupTicket);
+
+                    if (groupTicket != null)
                     {
-                        //if the group ticket has one ticket that is not served, we don't remove it yet
-                        cleanGroupTicket = null;
+                        //check if the group ticket was served
+                        for (Ticket ticket1 : groupTicket.getTicket()) {
+                            if (!ticket1.isFinished()) {
+                                //if the group ticket has one ticket that is not served, we don't remove it yet
+                                cleanGroupTicket = null;
+                            }
+                        }
                     }
                 }
             }
@@ -304,19 +325,20 @@ public class MarketManager implements Manager
             {
                 Pair<Long, Long> ticketsPair = it.next();
 
-                for (Ticket ticket : this.groupTickets.get(ticketsPair.getLeft()).getTicket())
+                GroupTicket groupTicket = this.groupTickets.get(ticketsPair.getLeft());
+                if (groupTicket != null)
                 {
-                    if (ticket.getTicketId().equals(ticketsPair.getRight()))
-                    {
-                        if (!ticket.isFinished() && !ticket.isBusy())
-                        {
-                            ticket.setBusy(true);
-                            service.setActualTicket(ticket);
+                    for (Ticket ticket : this.groupTickets.get(ticketsPair.getLeft()).getTicket()) {
+                        if (ticket.getTicketId().equals(ticketsPair.getRight())) {
+                            if (!ticket.isFinished() && !ticket.isBusy()) {
+                                ticket.setBusy(true);
+                                service.setActualTicketId(ticket.getTicketId());
 
-                            //Remove the ticket from the queue
-                            it.remove();
+                                //Remove the ticket from the queue
+                                it.remove();
 
-                            return ticket;
+                                return ticket;
+                            }
                         }
                     }
                 }
