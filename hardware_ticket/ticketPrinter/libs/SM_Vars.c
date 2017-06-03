@@ -12,7 +12,7 @@ enum state_codes state_transitions[][3] = {
   {SM_connectAP,    			SM_entry,      				SM_entry},     		  	//SM_entry
   {SM_waitForAP,    			SM_error,      				SM_connectAP},    	  	//SM_connectAP
   {SM_seekServiceInput,         SM_error,           		SM_waitForAP},    	  	//SM_waitForAP
-  {SM_postRequest,             	SM_error,           		SM_seekServiceInput}, 	//SM_seekServiceInput
+  {SM_postRequest,             	SM_seekServiceInput,        SM_seekServiceInput}, 	//SM_seekServiceInput
   {SM_printTicket,         		SM_error,	     			SM_seekServiceInput},	//SM_postRequest
   {SM_seekServiceInput,   	 	SM_seekServiceInput,	    SM_printTicket},	  	//SM_printTicket
   {out,             			SM_error,           		out},                 	//out

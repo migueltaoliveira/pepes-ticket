@@ -12,7 +12,6 @@
       case BTN_1:{    
         Services.activeServices[0]=!Services.activeServices[0];
         toPrint+=Services.labels[0];	
-      	
         break;
       }
 
@@ -61,6 +60,7 @@
       default:
        break;
      }
+
      buttonStates=0;
      return repeat;
  }

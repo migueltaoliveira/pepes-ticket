@@ -106,23 +106,23 @@ void sendRequest(struct httpReq* req, struct httpResp* resp, WiFiClient * client
 
       JsonObject& root = jsonBuffer.parseObject(line);
       if (!root.success()) {                            // everything OK  
-      resp->payload="ERROR";
+      resp->payload="ERROR IN JSON DECODING";
       }
       else{
         JsonArray& tickets = root["ticket"];
-
         resp->payload="";
         for(int i=0;i<tickets.size();i++){
           JsonObject& ticket = tickets[i];
           JsonObject& service = ticket["service"];
           String name=service["name"];
-          int ticketNumber=ticket["ticketNumber"];
+          int ticketNumber=ticket["ticketId"];
           resp->payload+=name;
           resp->payload+=": ";
           resp->payload+=String(ticketNumber);
           resp->payload+="\r\n";
         }
-       }   
+        //resp->payload=line;
+      }   
     }
   }
 
