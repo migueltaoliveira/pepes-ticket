@@ -54,6 +54,7 @@
     #include "libs/uiTimerInit.c"
     #include "libs/clearTerminal.c"
     #include "libs/LEDcombo.c"
+    int cur_ticket=0;
     int LED_count=0;
     int onoff_count=0;
 
