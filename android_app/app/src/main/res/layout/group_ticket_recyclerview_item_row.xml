@@ -8,6 +8,5 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:id="@+id/group_ticket_item"
-        android:text="Cafetaria, Peixaria, Pastelaria"
         android:layout_margin="@dimen/fab_margin"/>
 </LinearLayout>
