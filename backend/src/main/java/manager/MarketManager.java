@@ -328,15 +328,20 @@ public class MarketManager implements Manager
                 GroupTicket groupTicket = this.groupTickets.get(ticketsPair.getLeft());
                 if (groupTicket != null)
                 {
+                    boolean busy = false;
                     for (Ticket ticket : this.groupTickets.get(ticketsPair.getLeft()).getTicket()) {
-                        if (ticket.getTicketId().equals(ticketsPair.getRight())) {
-                            if (!ticket.isFinished() && !ticket.isBusy()) {
+                        busy = busy || ticket.isBusy();
+                    }
+
+                    if (!busy)
+                    {
+                        for (Ticket ticket : this.groupTickets.get(ticketsPair.getLeft()).getTicket()) {
+                            if (!ticket.isFinished() && ticket.getTicketId().equals(ticketsPair.getRight()))
+                            {
                                 ticket.setBusy(true);
                                 service.setActualTicketId(ticket.getTicketId());
 
-                                //Remove the ticket from the queue
                                 it.remove();
-
                                 return ticket;
                             }
                         }
